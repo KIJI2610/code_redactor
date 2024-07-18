@@ -48,3 +48,15 @@ body{
     background-color: white;
     color: orange;
 }
+.container{
+    display: flex;
+}
+.panel-contaoner{
+    margin-left: 10px;
+    margin-right: 10px;
+}
+.console{
+    height: 700px;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+}

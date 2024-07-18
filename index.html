@@ -7,11 +7,20 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div>
-        <div class="header-code-inp">
-            <button id="run" class="run">RUN</button>
+    <div class="container">
+
+        <div class="panel-contaoner">
+            <div class="header-code-inp">
+                <button id="run" class="run">RUN</button>
+            </div>
+            <textarea class="code-inp" id="code"></textarea>
         </div>
-        <textarea class="code-inp" id="code"></textarea>
+
+        <div class="panel-contaoner">
+            
+            <textarea class="code-inp console" id="console"></textarea>
+        </div>
+
     </div>
 
     <script src="axios.min.js"></script>

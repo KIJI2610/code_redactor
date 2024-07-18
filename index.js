@@ -6,9 +6,13 @@ const app = express()
 app.use(bodyParser.text())
 app.use(cors())
 
-function runing(code){
-    const result = new Function(`${code}`)
-    return result()
+function runing(code) {
+    try {
+        const result = new Function(`${code}`)
+        return result()
+    } catch (error) {
+        return `Error: ${error.message}`
+    }
 }
 
 const a = 12
@@ -18,7 +22,9 @@ app.get('/', (req, res) => {
 
 app.post('/run', (req, res) => {
     const code = req.body
-    runing(code)
+    const result = runing(code)
+    res.send(result)
+
 })
 
 app.listen(3000, () => {
