@@ -1,0 +1,20 @@
+{
+
+    "scripts": {
+      "main": "main.js"
+    },
+    "styles": {
+      "css": "style.css"
+    },
+    "libraries": {
+      "jquery": "3.6.0"
+    },
+    "browser": {
+      "chrome": {
+        "version": "80"
+      },
+      "firefox": {
+        "version": "70"
+      }
+    }
+  }

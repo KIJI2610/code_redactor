@@ -1,0 +1,50 @@
+body{
+    display: grid;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+
+    background-color: rgb(114, 86, 141);
+}
+
+.code-inp{
+    width: 400px;
+    height: 600px;
+    resize: none;
+    padding: 0;
+    border: none;
+    outline: none;
+    background-color: rgb(43, 38, 48);
+    color: antiquewhite;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+    box-sizing: border-box;
+    padding-left:10px;
+    padding-top: 5px;
+}
+.header-code-inp{
+    width: 400px;
+    height: 100px;
+    background-color: rgb(60, 57, 110);
+    box-sizing: border-box;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.run{
+    border: none;
+    outline: none;
+    border-radius: 5px;
+    height: 50px;
+    width: 100px;
+    font-size: 24pt;
+    background-color: rgb(126, 126, 198);
+    color: rgb(179, 206, 245);
+    transition: 200ms;
+}
+.run:hover{
+    background-color: white;
+    color: orange;
+}
