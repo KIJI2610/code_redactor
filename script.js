@@ -10,8 +10,9 @@ const sandbox = {
             elementConsole.textContent += `${output}\n`
         }
     },
-    setInterval: window.setInterval,
-    clearInterval: window.clearInterval
+    setInterval: window.setInterval.bind(window),
+    clearInterval: window.clearInterval.bind(window),
+    setTimeout: window.setTimeout.bind(window)
 }
 
 const restrictedContext = new Proxy(sandbox, {
@@ -24,6 +25,7 @@ const restrictedContext = new Proxy(sandbox, {
     }
 })
 
+
 run.addEventListener('click', () => {
     try {
         const func = new Function('sandbox', `with (sandbox) { ${code.value} }`)
@@ -32,6 +34,8 @@ run.addEventListener('click', () => {
         elementConsole.textContent = `Error: ${error.message}`
     }
 })
+
+
 
 code.addEventListener('keydown', (e) => {
     if (e.key === 'Tab') {
@@ -64,6 +68,18 @@ code.addEventListener('input', (e) => {
         code.selectionEnd = end;
         previosCharBracket = true
     }
+    else if (currentVal[start - 1] === '(') {
+        e.target.value = currentVal.slice(0, start - 1) + '()' + currentVal.slice(start);
+        code.selectionStart = start;
+        code.selectionEnd = end;
+        previosCharBracket = true
+    }
+    else if (currentVal[start - 1] === '[') {
+        e.target.value = currentVal.slice(0, start - 1) + '[]' + currentVal.slice(start);
+        code.selectionStart = start;
+        code.selectionEnd = end;
+        previosCharBracket = true
+    }
     else{
         previosCharBracket = false
     }
@@ -77,14 +93,14 @@ code.addEventListener('keydown', (e) => {
         const selectionStart = e.target.selectionStart;
         const previosChar = currentVal[selectionStart - 1];
         const nextChar = currentVal[selectionStart];
-        if(previosChar === '{' && nextChar === '}'){
+        if(previosChar === '{' && nextChar === '}' || previosChar === '(' && nextChar === ')' || previosChar === '[' && nextChar === ']'){
             const newValue = currentVal.slice(0, selectionStart) + '\n' + currentVal.slice(selectionStart);
             e.target.value = newValue;
             e.target.selectionStart = selectionStart;
             e.target.selectionEnd = selectionStart;
             
         }
-
-
     }
 });
+
+

@@ -21,7 +21,7 @@ body{
     box-sizing: border-box;
     padding-left: 10px;
     padding-top: 5px;
-    white-space: pre;
+    tab-size: 4;
 }
 
 .header-code-inp{
