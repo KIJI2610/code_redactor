@@ -8,14 +8,14 @@ body{
 }
 
 .code-inp {
-    width: 400px;
-    height: 600px;
+    width: 600px;
+    height: 800px;
     resize: none;
     padding: 0;
     border: none;
     outline: none;
     background-color: rgb(43, 38, 48);
-    color: antiquewhite;
+    color:aquamarine;
     border-bottom-left-radius: 10px;
     border-bottom-right-radius: 10px;
     box-sizing: border-box;
@@ -25,7 +25,7 @@ body{
 }
 
 .header-code-inp{
-    width: 400px;
+    width: 600px;
     height: 100px;
     background-color: rgb(60, 57, 110);
     box-sizing: border-box;
@@ -60,7 +60,7 @@ body{
     margin-right: 10px;
 }
 .console{
-    height: 700px;
+    height: 900px;
     border-top-left-radius: 10px;
     border-top-right-radius: 10px;
     overflow-x: hidden;

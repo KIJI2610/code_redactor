@@ -1,15 +1,17 @@
 const run = document.getElementById('run')
 const code = document.getElementById('code')
-const consoleElement = document.getElementById('console')
+const elementConsole = document.getElementById('console')
 const stop = document.getElementById('stop')
 
 const sandbox = {
     console: {
         log: (...args) => {
             const output = args.map(arg => String(arg)).join(' ')
-            consoleElement.textContent += `${output}\n`
+            elementConsole.textContent += `${output}\n`
         }
-    }
+    },
+    setInterval: window.setInterval,
+    clearInterval: window.clearInterval
 }
 
 const restrictedContext = new Proxy(sandbox, {
@@ -27,7 +29,7 @@ run.addEventListener('click', () => {
         const func = new Function('sandbox', `with (sandbox) { ${code.value} }`)
         func(restrictedContext)
     } catch (error) {
-        consoleElement.textContent = `Error: ${error.message}`
+        elementConsole.textContent = `Error: ${error.message}`
     }
 })
 
@@ -42,6 +44,8 @@ code.addEventListener('keydown', (e) => {
     }
 })
 
+let previosCharBracket = false
+
 code.addEventListener('input', (e) => {
     const currentVal = e.target.value;
     const lastChar = currentVal[currentVal.length - 1];
@@ -52,17 +56,35 @@ code.addEventListener('input', (e) => {
         e.target.value = currentVal.slice(0, -1) + lastChar + lastChar;
         code.selectionStart = start;
         code.selectionEnd = end;
-    } else if (lastChar === '{') {
-        e.target.value += '}'
-        code.selectionStart -= 1
-        code.selectionEnd -= 1
+        previosCharBracket = true
     }
+    else if (currentVal[start - 1] === '{') {
+        e.target.value = currentVal.slice(0, start - 1) + '{}' + currentVal.slice(start);
+        code.selectionStart = start;
+        code.selectionEnd = end;
+        previosCharBracket = true
+    }
+    else{
+        previosCharBracket = false
+    }
+
+    console.log(previosCharBracket)
 });
 
-// consoleElement.addEventListener('keydown', (e) => {
-//     if(e.key === 'Enter'){
-//         e.preventDefault()
-//         const lenConsole = consoleElement.value.length
-        
-//     }
-// })
+code.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter' && previosCharBracket === true) {
+        const currentVal = e.target.value;
+        const selectionStart = e.target.selectionStart;
+        const previosChar = currentVal[selectionStart - 1];
+        const nextChar = currentVal[selectionStart];
+        if(previosChar === '{' && nextChar === '}'){
+            const newValue = currentVal.slice(0, selectionStart) + '\n' + currentVal.slice(selectionStart);
+            e.target.value = newValue;
+            e.target.selectionStart = selectionStart;
+            e.target.selectionEnd = selectionStart;
+            
+        }
+
+
+    }
+});
