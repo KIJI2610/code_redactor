@@ -8,8 +8,9 @@ const sandbox = {
         log: (...args) => {
             const output = args.map(arg => String(arg)).join(' ')
             elementConsole.textContent += `${output}\n`
-        }
+        }        
     },
+    
     setInterval: window.setInterval.bind(window),
     clearInterval: window.clearInterval.bind(window),
     setTimeout: window.setTimeout.bind(window)
