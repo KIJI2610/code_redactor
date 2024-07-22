@@ -8,7 +8,7 @@ body{
 }
 
 .setting-panel{
-    height: 900px;
+    height: 750px;
     width: 300px;
     background-color: rgb(43, 38, 48);
     border-radius: 10px;
@@ -16,7 +16,7 @@ body{
 
 .code-inp {
     width: 600px;
-    height: 800px;
+    height: 650px;
     resize: none;
     padding: 0;
     border: none;
@@ -67,7 +67,7 @@ body{
     margin-right: 10px;
 }
 .console{
-    height: 900px;
+    height: 750px;
     border-top-left-radius: 10px;
     border-top-right-radius: 10px;
     overflow-x: hidden;

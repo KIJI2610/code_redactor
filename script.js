@@ -50,43 +50,49 @@ code.addEventListener('keydown', (e) => {
 })
 
 let previosCharBracket = false
+let previosCharOpenBracket = false
 
 code.addEventListener('input', (e) => {
     const currentVal = e.target.value;
-    const lastChar = currentVal[currentVal.length - 1];
     const start = code.selectionStart;
     const end = code.selectionEnd;
 
-    if (lastChar === `'` || lastChar === '"' || lastChar === '`') {
-        e.target.value = currentVal.slice(0, -1) + lastChar + lastChar;
-        code.selectionStart = start;
-        code.selectionEnd = end;
+    if (currentVal[start - 1] === '{' && previosCharOpenBracket === true) {
+        e.target.value = currentVal.slice(0, start - 1) + '{}' + currentVal.slice(start)
+        code.selectionStart = start
+        code.selectionEnd = end
         previosCharBracket = true
     }
-    else if (currentVal[start - 1] === '{') {
-        e.target.value = currentVal.slice(0, start - 1) + '{}' + currentVal.slice(start);
-        code.selectionStart = start;
-        code.selectionEnd = end;
+    else if (currentVal[start - 1] === '(' && previosCharOpenBracket === true) {
+        e.target.value = currentVal.slice(0, start - 1) + '()' + currentVal.slice(start)
+        code.selectionStart = start
+        code.selectionEnd = end
         previosCharBracket = true
     }
-    else if (currentVal[start - 1] === '(') {
-        e.target.value = currentVal.slice(0, start - 1) + '()' + currentVal.slice(start);
-        code.selectionStart = start;
-        code.selectionEnd = end;
-        previosCharBracket = true
-    }
-    else if (currentVal[start - 1] === '[') {
-        e.target.value = currentVal.slice(0, start - 1) + '[]' + currentVal.slice(start);
-        code.selectionStart = start;
-        code.selectionEnd = end;
+    else if (currentVal[start - 1] === '[' && previosCharOpenBracket === true) {
+        e.target.value = currentVal.slice(0, start - 1) + '[]' + currentVal.slice(start)
+        code.selectionStart = start
+        code.selectionEnd = end
         previosCharBracket = true
     }
     else{
         previosCharBracket = false
+        previosCharOpenBracket = false
     }
 
     console.log(previosCharBracket)
+    console.log(previosCharOpenBracket)
 });
+
+code.addEventListener('keydown', (e) => {
+    if(e.key === '{' || e.key === '(' || e.key === '['){
+        console.log('Bracket')
+        previosCharOpenBracket = true
+    }
+    else if(e.key !== '{' || e.key !== '(' || e.key !== '['){
+        previosCharOpenBracket = false
+    }
+})
 
 code.addEventListener('keydown', (e) => {
     if (e.key === 'Enter' && previosCharBracket === true) {
@@ -103,5 +109,21 @@ code.addEventListener('keydown', (e) => {
         }
     }
 });
+
+
+
+
+
+// code.addEventListener('keydown', (e) => {
+//     if(e.key === 'Backspace'){
+//         const currentVal = e.target.value;
+//         const selectionStart = e.target.selectionStart;
+//         const previosChar = currentVal[selectionStart - 1];
+//         if(previosChar === '{' || previosChar === '}' || previosChar === '(' || previosChar === ')' || previosChar === '[' || previosChar === ']'){
+//             previosCharBracket = false
+            
+//         }
+//     }
+// })
 
 
