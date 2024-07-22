@@ -3,6 +3,7 @@ const code = document.getElementById('code')
 const elementConsole = document.getElementById('console')
 const stop = document.getElementById('stop')
 
+//новый объект консоли
 const sandbox = {
     console: {
         log: (...args) => {
@@ -16,6 +17,7 @@ const sandbox = {
     setTimeout: window.setTimeout.bind(window)
 }
 
+//ограничение контекста
 const restrictedContext = new Proxy(sandbox, {
     has: () => true, 
     get: (target, key) => {
@@ -26,7 +28,7 @@ const restrictedContext = new Proxy(sandbox, {
     }
 })
 
-
+//запуск кода
 run.addEventListener('click', () => {
     try {
         const func = new Function('sandbox', `with (sandbox) { ${code.value} }`)
@@ -36,8 +38,7 @@ run.addEventListener('click', () => {
     }
 })
 
-
-
+// для таубляции 
 code.addEventListener('keydown', (e) => {
     if (e.key === 'Tab') {
         e.preventDefault()
@@ -49,9 +50,11 @@ code.addEventListener('keydown', (e) => {
     }
 })
 
+//переменные для проверки предыдущего символа на скобку
 let previosCharBracket = false
 let previosCharOpenBracket = false
 
+//автозакрытие скобок
 code.addEventListener('input', (e) => {
     const currentVal = e.target.value;
     const start = code.selectionStart;
@@ -84,6 +87,7 @@ code.addEventListener('input', (e) => {
     console.log(previosCharOpenBracket)
 });
 
+//для нормального удаления скобок
 code.addEventListener('keydown', (e) => {
     if(e.key === '{' || e.key === '(' || e.key === '['){
         console.log('Bracket')
@@ -94,6 +98,7 @@ code.addEventListener('keydown', (e) => {
     }
 })
 
+//для разрыва строки при срабатывании внутри скобок
 code.addEventListener('keydown', (e) => {
     if (e.key === 'Enter' && previosCharBracket === true) {
         const currentVal = e.target.value;
@@ -101,11 +106,11 @@ code.addEventListener('keydown', (e) => {
         const previosChar = currentVal[selectionStart - 1];
         const nextChar = currentVal[selectionStart];
         if(previosChar === '{' && nextChar === '}' || previosChar === '(' && nextChar === ')' || previosChar === '[' && nextChar === ']'){
-            const newValue = currentVal.slice(0, selectionStart) + '\n' + currentVal.slice(selectionStart);
+            const newValue = currentVal.slice(0, selectionStart) + '\n\t\n' + currentVal.slice(selectionStart);
             e.target.value = newValue;
-            e.target.selectionStart = selectionStart;
-            e.target.selectionEnd = selectionStart;
-            
+            e.target.selectionStart = selectionStart + 2;
+            e.target.selectionEnd = selectionStart + 2;
+            e.preventDefault()
         }
     }
 });
